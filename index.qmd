@@ -1,0 +1,375 @@
+---
+title: "Petite introduction au package `purrr`"
+  
+categories:
+  - Boucle
+  
+author: 
+  - name: "Julio Ricardo Davalos"
+    affiliations:
+      - name: "Ined"
+
+date: 11/12/2025
+
+image: "https://www.r-project.org/Rlogo.png"
+
+format: 
+  html: default
+
+filters:
+  - lightbox
+lightbox: auto
+
+code-annotations: below
+
+abstract: | 
+ Que ce soit dans la production de données ou leur traitement (scraping, construction d'indicateurs etc.), l'utilisation d'enquêtes à plusieurs vagues à la suite ou encore la contruction de fonctions, la répétition d'une même tâche est récurrente dans l'utilisation classique de R. Dans cette fiche, nous introduirons une manière de faire des boucles et donc d'automatiser certains traitements à l'aide du package `purrr`.
+---
+
+| Packages   | Fonctions                              |
+|------------|----------------------------------------|
+| **Base R** | list -  for - mean - sum               |
+| **dplyr**  | across                                 |
+| **purrr**  | map - imap - map2 - pmap - in_parallel |
+| **mirai**  | deamon                                 |
+
+: **Fonctions utilisées dans la fiche**
+
+Le package `purrr` permet de faire des boucles de manière plus efficace et plus lisible que les boucles `for` classiques de R. Il permet d'appliquer une fonction à chaque élément d'une ou plusieurs listes ou vecteurs. Pour rappel: une fonction est un ensemble d'instructions qui prennent des arguments en entrée et renvoient une valeur en sortie, elle aura aussi des "effets secondaires" (*side effect*) comme par exemple les messages produits pendant l'exécution d'instructions ou parfois l'enregistrement de fichiers. Il y a donc deux types de fonctions dans `purrr` : celles destinées à renvoyer la valeur de sortie de la fonction, il s'agit des fonctions de type `map` et celles qui produisent des *side effect*, il s'agit des fonctions de type `walk`. Nous ne reviendrons pas sur les fonctions `walk` plus bas, car elles fonctionnent exactement comme `map`, seule leur finalité diffère.
+
+# Boucles `for` classiques
+
+Dans une boucle `for` classique, on définit un vecteur ou une liste d'éléments sur lesquels on veut itérer, puis on écrit le code à exécuter pour chaque élément. Par exemple, pour calculer la moyenne de plusieurs vecteurs dans une liste :
+
+### Exemple 1 : obtenir une moyenne pour chaque vecteur d'une liste
+
+```{r}
+# on crée une liste de vecteurs
+vecteurs <- list(a = 1:10, b = 11:20, c = 21:30)
+# on initialise une liste vide pour stocker les moyennes
+moyennes <- list()
+# pour chaque vecteur a, b et c de `vecteurs` on calcule la moyenne que l'on place dans `moyennes` avec le même nom
+for (i in names(vecteurs)) {
+  moyennes[[i]] <- mean(vecteurs[[i]])
+}
+# on affiche les résultats
+moyennes
+```
+
+Cela fonctionne très bien. Mais alors pourquoi ne pas utiliser de boucles for dans un script R ? Les boucles `for` peuvent être moins efficaces en termes de performance, surtout pour de grandes quantités de données. R est un langage optimisé sur des données vectorisées, il souffrira donc davantage de l'utilisation de boucles `for`, par exemple quand celles-ci comportent des ré-indexations. De plus, le code peut devenir long et difficile à lire lorsque les boucles sont imbriquées ou complexes. C'est là que `purrr` entre en jeu. Dans les fonctions de ce package, le traitement est optimisé et la structure du code et des arguments nous oblige à adopter une syntaxe clarifiée. De plus, on en verra des exemples, elles fournissent des avantages natifs très appréciables comme :
+
+-   une barre de progression
+
+-   une parallélisation des tâches pour aller plus vite dans le traitement de grandes quantités de données
+
+-   une standardisation des outputs qui ne sont que des listes, sauf si l'on précise le contraire (voir plus bas)
+
+
+
+Enfin, les fonctions de `purrr` permettent de différencier au premier regard le type d'inputs que l'on va utiliser :
+
+-   toutes les fonctions de type `map` ou `walk` permettant de faire une boucle avec un unique vecteur ou liste en input
+
+-   toutes les fonctions de type `map2` ou `walk2` permettant de faire une boucle avec deux vecteurs ou listes en input
+
+-   toutes les fonctions de type `pmap` ou `pwalk` permettant de faire une boucle avec plusieurs vecteurs ou listes en input
+
+
+
+# Les fonctions à input unique (de type `map` ou `walk`)
+
+Reprenons le même exemple que précédemment, mais cette fois-ci en utilisant la fonction `map`.
+
+### Exemple 1bis
+
+```{r}
+# on charge le package
+library(purrr)
+# on applique la fonction `mean` à chaque élément de la liste `vecteurs`
+moyennes <- map(vecteurs, mean)
+moyennes
+```
+
+Dans notre exemple, `map` prend deux arguments principaux : la liste ou le vecteur sur lequel on veut itérer (ici `vecteurs`) et la fonction à appliquer à chaque élément (ici `mean`). Le résultat est une liste contenant les moyennes de chaque vecteur. Cela fonctionne sans préciser quel argument est utilisé dans `mean` car cette fonction n'en admet qu'un obligatoire.
+
+Si la fonction à appliquer prend plusieurs arguments, on peut les spécifier en utilisant des arguments nommés directement dans la fonction `map`.
+
+### Exemple 2 : moyenne avec valeurs manquantes
+
+```{r}
+# on crée une liste de vecteurs avec des valeurs manquantes
+vecteurs_na <- list(a = c(1:10, NA), b = c(11:20, NA), c = c(21:30, NA))
+# on applique la fonction `mean` en ignorant les NA
+moyennes_na <- map(vecteurs_na, mean, na.rm = TRUE)
+moyennes_na
+```
+
+Une autre syntaxe peut être utilisée lorsque l'on veut ajouter des arguments ou lorsque l'on veut utiliser des fonctions anonymes (n'ayant pas de nom dans l'environnement).
+
+### Exemple 3 : faire une somme des carrés sans valeurs manquantes
+
+```{r}
+# on veut obtenir les carrés puis les sommer : sum(x^2)
+# on applique notre fonction anonyme pour calculer, en précisant l'argument na.rm
+somme_carres <- map(vecteurs_na, ~sum(.x^2, na.rm = TRUE))
+somme_carres
+```
+
+Le tilde `~` permet de signifier qu'il s'agit d'une fonction (de type formula). La mention de `.x` dans la formule indique que la fonction s'applique à chaque élément de la liste choisie (ici `vecteurs_na`).
+
+Cela n'aurait pas fonctionné en sortant l'argument de notre fonction `sum` :
+
+```{r}
+somme_carres <- map(vecteurs_na, ~sum(.x^2), 
+                    na.rm = TRUE)
+somme_carres
+```
+
+Mais cela fonctionne également si on a un data.frame en input. Chaque colonnne sera traitée comme un élément de la liste.
+
+```{r}
+as.data.frame(vecteurs_na)
+somme_carres <- map(as.data.frame(vecteurs_na), ~sum(.x^2, na.rm = TRUE))
+somme_carres
+```
+
+Si je veux obtenir un vecteur et non une liste en sortie, je peux utiliser `map_dbl`, `map_int`, `map_lgl`, `map_chr`, `map_vec` selon le type de sortie souhaitée (respectivement double, integer, logical, character ou vecteur en général). Il va de soi que la fonction `walk` n'a pas d'équivalent puisque l'output ne nous y intéresse pas.
+
+### Exemple 3bis : somme des carrés sous forme de vecteur numérique
+
+```{r}
+# dans l'exemple précédent :
+class(somme_carres)
+# avec map_dbl :
+somme_carres <- map_dbl(vecteurs_na, ~sum(.x^2, na.rm = TRUE))
+somme_carres
+class(somme_carres)
+```
+
+# Options supplémentaires
+
+## Ignorer les erreurs
+
+Il arrive dans certains traitements qu'ils n'aboutissent pas car la fonction ne peut pas être exécutée sur certains éléments. Dans ce cas, la boucle s'arrête et on n'a plus qu'à recommencer. La fonction `safely` permet d'y remédier. Elle permet de transformer la fonction, de sorte à ce qu'elle renvoie `NULL` en cas d'erreur.
+
+### Exemple 4 : gestion des erreurs avec `safely`
+
+```{r}
+# on ajoute un élément character dans notre liste vecterus_na
+vecteurs_na_err <- c(vecteurs_na, d = "erreur")
+# on crée une version "safe" de notre fonction somme_carres_pause
+somme_carres <- function(x) {
+  sum(x^2, na.rm = TRUE)
+}
+somme_carres_safe <- safely(somme_carres)
+
+# on applique la fonction "safe" avec une barre de progression
+somme_carres_err <- map(vecteurs_na_err, somme_carres_safe)
+somme_carres_err
+# l'argument otherwise de safely permet de définir une valeur de remplacement en cas d'erreur
+somme_carres_safe2 <- safely(somme_carres, otherwise = NA)
+somme_carres_err2 <- map(vecteurs_na_err, somme_carres_safe2)
+# on peut réorganiser la liste pour ne garder que les resultats avec la fonction transpose
+# cela donne donc :
+resultats <- transpose(somme_carres_err2)$result
+resultats
+```
+
+## Barres de progression
+
+Les fonctions de `purrr` permettent d'ajouter une barre de progression très facilement en utilisant l'argument `.progress`. Cet argument prend la valeur `TRUE` ou le nom de l'opération concernée dans la boucle. Ce dernier cas est conseillé quand il y a plusieurs boucles imbriquées.
+
+### Exemple 4 : calcul long avec barre de progression
+
+```{r}
+# on ajoute une pause de 2 secondes dans la fonction somme_carres pour simuler un calcul long
+somme_carres_pause <- function(x) {
+  Sys.sleep(2)
+  somme_carres(x)
+}
+# on applique la fonction avec une barre de progression
+somme_carres_prog <- map(vecteurs_na, somme_carres_pause, .progress = "somme")
+somme_carres_prog
+
+```
+
+La barre de progression est très utile lorsque le traitement est long : cela permet d'être sûr de l'avancement de la boucle ou de repérer un blocage. On peut agrémenter en ajoutant des `message()` d'étape dans les fonctions afin de comprendre plus vite quand il y a un problème.
+
+
+## Parallélisation des traitements (expérimental)
+
+Le package `purrr` propose la fonction `in_parallel` qui permet d'exécuter différents objets en parallèle en utilisant plusieurs "workers". Cela peut considérablement accélérer le traitement de grandes quantités de données.
+
+### Exemple 5 : parallélisation avec `in_parallel`
+
+```{r}
+# # on planifie l'utilisation de 3 workers vu qu'il y a 3 objets dans la liste vecteurs_na
+mirai::daemons(3)
+# on applique la fonction avec parallélisation
+somme_carres_parallel <- map(vecteurs_na, 
+                             in_parallel(
+# attention, il faut absolument définir la fonction au sein de in_parallel si elle est anonyme
+                               ~(Sys.sleep(2) +
+                                   return(sum(.x^2, na.rm = TRUE))
+                                 )
+                               ),
+                              .progress = "somme")
+
+somme_carres_parallel
+# on arrête les daemons
+mirai::daemons(0)
+```
+
+Au final, l'opération a permis de gagner du temps car chaque traitement a été fait par un worker, en parallèle. Cela n'a duré que 2 secondes (malgré ce qui est affiché) au lieu de 6 secondes à l'origine.
+
+
+# Les fonctions à 2 input (de type `map2` ou `walk2`)
+
+Avec `map2` il faut deux listes ou vecteurs en input. Les deux doivent faire la même taille car les éléments des listes seront utilisés ensemble. La fonction appliquée doit logiquement prendre deux arguments.
+
+### Exemple 6 : moyenne pondérée
+
+```{r}
+# on crée deux listes de vecteurs
+valeurs <- list(a = 1:10, b = 11:20, c = 21:30)
+poids <- list(a_pond = rpois(10, 3) / 3, b_pond = rpois(10, 3) /3, c_pond = rpois(10, 3) /3)
+# on applique la fonction `weighted.mean` à chaque paire d'éléments des deux listes
+moyennes_ponderees <- map2(valeurs, poids, weighted.mean)
+moyennes_ponderees
+
+# on peut également l'écrire ainsi :
+moyennes_ponderees <- map2(valeurs, poids, ~weighted.mean(.x, .y))
+moyennes_ponderees
+```
+
+On peut remarquer que les noms d'objets de la première liste (`a`, `b`, `c`) ont été conservés. Dans le cas d'un data.frame, on pourrait utiliser une autre façon de faire des boucles avec `across`.
+
+### Exemple 6bis : moyenne pondérée avec `dplyr` (voir le détail du fonctionnement dans la fiche sur les recodages multiples)
+
+```{r}
+# on crée un data.frame
+df <- data.frame(valeurs, poids)
+library(dplyr, quietly = T)
+df %>%
+  summarise(
+    across(
+      # on sélectionne les colonnes avec un seul caractère
+      matches("^.$"), 
+      # on leur applique la fonction weighted.mean en utilisant les colonnes de poids 
+      # (même nom collé avec _pond)
+      ~weighted.mean(.x, get(paste0(cur_column(), "_pond")))
+      )
+    )
+
+```
+
+On trouve bien les mêmes valeurs que dans l'exemple précédent. `map2` agit donc sur les deux listes en prenant un argument de part et d'autre à chaque fois.
+
+Un cas particulier de `map2` est `imap` qui permet de faire des boucles en utilisant à la fois les éléments d'une liste et leurs noms (ou indices si la liste n'a pas de noms). La fonction appliquée doit donc prendre deux arguments : l'élément de la liste et son nom (ou son indice).
+
+### Exemple 7 : coller noms d'objets et leurs valeurs
+
+```{r}
+# on crée une liste de vecteurs
+vecteurs <- list(a = 1:5, b = 6:10, c = 11:15)
+# on utilise imap pour coller les noms (2e variable .y) et les valeurs (1ere variable .x)
+resultat <- imap(vecteurs, ~paste("La somme du vecteur", .y, "est de :", paste(.x, collapse = ", ")))
+resultat
+```
+
+Le fonctionnement est similaire pour `pmap` qui permet de faire des boucles sur plusieurs listes ou vecteurs en input. Dans ce cas, la fonction appliquée doit prendre autant d'arguments qu'il y a de listes en input.
+
+Les options que l'on a évoqué plus haut sont bien entendu disponibles dans `map2`, `imap`, `pmap` et leurs dérivés.
+
+Passons maintenant à des cas concrets d'utilisation de `purrr`.
+
+
+# Exemples d'applications concrètes
+
+On peut voir à l'exemple 6bis que l'intérêt de `purrr` peut s'avérer limité : dans le cas de boucles sur des colonnes de data.frames, `dplyr` aura généralement une solution à proposer. C'est probablement une des raisons qui contribue à la méconnaissance de ce package. Nous pouvons donc maintenant regarder des cas particuliers sur lesquels il peut être intéressant d'utiliser ces fonctions.
+
+## Récolter des données web
+
+Le webscraping est un cas d'utilisation classique de `purrr` car il nécessite souvent de faire des requêtes répétées sur plusieurs pages web ou plusieurs éléments d'une page. Voici un [*manuel*](https://fvergnaud.gitpages.huma-num.fr/manuelscraping/) permettant d'en percevoir tous les enjeux.
+
+Dans ce cadre, le package `purrr` permet de correctement séparer les différentes étapes du scraping : récupération des liens, extraction des données, nettoyage etc. en fonctions répétées si nécessaire.
+
+
+## Importer des jeux de données analogues en une fois
+
+Il est souvent nécessaire d'importer des jeux de données qui se ressemblent avec de nombreux fichiers (par exemple : les vagues d'une enquête, des données administratives annuelles, etc)
+### Exemple 8 : importation de fichiers csv annuels
+```{r}
+# on utilise le jeu de données penguins qui regroupe des données par annees et 
+# sont disponibles dans le dataset de base R
+head(penguins)
+# on récupère les années disponibles
+years <- unique(penguins$year)
+# on crée un dossier temporaire pour stocker les fichiers
+temp_dir <- tempdir()
+file_paths <- file.path(temp_dir, paste0("penguins_", years, ".csv"))
+# on crée des fichiers csv pour chaque année avec walk2
+walk2(years, file_paths, 
+# on supprime l'année pour voir comment l'ajouter plus bas
+      ~readr::write_csv(filter(penguins, year == .x) %>% select(-year), .y))
+# on liste les fichiers créés
+list.files(temp_dir, pattern = "penguins_.*\\.csv$")
+# ils sont bien créés
+
+# l'année est contenue dans le nom du fichier, avant '.csv', on l'ajoute au nom du vecteur file_paths
+file_paths <- set_names(file_paths, stringr::str_extract(file_paths, "\\d+(?=\\.csv$)"))
+# on importe les fichiers avec imap en ajoutant l'année comme variable grâce au nom
+penguins_list <- imap(file_paths, 
+                      ~readr::read_csv(.x, show_col_types = FALSE) %>%
+                        mutate(year = as.integer(.y)))
+# on vérifie que les données ont bien été importées
+penguins_list
+
+# on peut refusionner les data.frames en un seul
+list_rbind(penguins_list)
+```
+
+Bien sûr, nous avons pris ici un cas simple mais dans le cas où les bases auraient des noms de variable différents ou des modalités différentes, on pourrait inclure une fonction qui permettrait d'adapter chaque base avant de fusionner. On peut également ne pas fusionner les bases de données et garder tout cela sous forme de liste dans laquelle on viendrait ensuite piocher pour faire des analyses.
+
+
+## Réaliser un même traitement sur plusieurs ensembles de données
+
+Cette fois, il s'agit de réaliser un même traitement sur plusieurs data.frames ou tibbles. Par exemple, on peut vouloir calculer des statistiques descriptives sur plusieurs jeux de données similaires. Dans le cas de données d'enquêtes par vague, cela peut permetttre de faire très vite la comparaison.
+
+### Exemple 9 : statistiques descriptives sur plusieurs data.frames
+```{r}
+# on importe un package permettant de faire des statistiques descriptives facilement (que j'ai créé et déposé sur github)
+devtools::install_github("jrdavalos/qessmasteR", dependencies = TRUE, quiet = TRUE)
+# la fonction desc_quali permet de faire un tri à plat sur un ensemble de variables catégorielles et desc_quanti permet d'obtenir des statistiques descriptives concernant une variable continue
+
+# on reprend le jeu de données penguins sous forme de liste
+penguins_list %>% 
+  # on applique la fonction
+  map(~qessmasteR::desc_quanti(.x, -year)) %>%
+  # on rajoute l'année dans les résultats
+  imap(~mutate(.x, year = .y, .before = Variable)) %>%
+  # on regroupe les data.frames en un seul
+  list_rbind()
+# on a bien les statistiques descriptives pour chaque année et pour chaque variable
+```
+
+On peut évidemment faire d'autres types de traitements comme des modèles, de la data-visualisation, etc.
+
+Ici on a subdivisé la base de donnée par année en sauvegardant pour l'exemple, mais on peut également le faire sur une variable quelconque et au sein du traitement avec la fonction `group_split`
+
+Exemple 9bis : même chose en partant du data.frame d'origine
+```{r}
+penguins %>%
+  # on divise le data.frame par année
+  group_split(year) %>%
+  # on applique la fonction
+  map(~qessmasteR::desc_quanti(.x, -year)) %>%
+  # on rajoute l'année dans les résultats
+  imap(~mutate(.x, year = unique(penguins$year)[as.integer(.y)], .before = Variable)) %>%
+  # on regroupe les data.frames en un seul
+  list_rbind()
+# on a bien la même chose que précédemment
+```
+
+
+
