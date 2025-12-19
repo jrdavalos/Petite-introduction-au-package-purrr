@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Julio Ricardo Davalos">
-<meta name="dcterms.date" content="2025-11-12">
+<meta name="dcterms.date" content="2025-12-19">
 
 <title>Petite introduction au package purrr – Introduction au package purrr</title>
 <style>
@@ -169,26 +169,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul></li>
   <li><a href="#barres-de-progression" id="toc-barres-de-progression" class="nav-link" data-scroll-target="#barres-de-progression">Barres de progression</a>
   <ul class="collapse">
-  <li><a href="#exemple-4-calcul-long-avec-barre-de-progression" id="toc-exemple-4-calcul-long-avec-barre-de-progression" class="nav-link" data-scroll-target="#exemple-4-calcul-long-avec-barre-de-progression">Exemple 4 : calcul long avec barre de progression</a></li>
+  <li><a href="#exemple-5-calcul-long-avec-barre-de-progression" id="toc-exemple-5-calcul-long-avec-barre-de-progression" class="nav-link" data-scroll-target="#exemple-5-calcul-long-avec-barre-de-progression">Exemple 5 : calcul long avec barre de progression</a></li>
   </ul></li>
   <li><a href="#parallélisation-des-traitements-expérimental" id="toc-parallélisation-des-traitements-expérimental" class="nav-link" data-scroll-target="#parallélisation-des-traitements-expérimental">Parallélisation des traitements (expérimental)</a>
   <ul class="collapse">
-  <li><a href="#exemple-5-parallélisation-avec-in_parallel" id="toc-exemple-5-parallélisation-avec-in_parallel" class="nav-link" data-scroll-target="#exemple-5-parallélisation-avec-in_parallel">Exemple 5 : parallélisation avec <code>in_parallel</code></a></li>
+  <li><a href="#exemple-6-parallélisation-avec-in_parallel" id="toc-exemple-6-parallélisation-avec-in_parallel" class="nav-link" data-scroll-target="#exemple-6-parallélisation-avec-in_parallel">Exemple 6 : parallélisation avec <code>in_parallel</code></a></li>
   </ul></li>
   </ul></li>
   <li><a href="#les-fonctions-à-2-input-de-type-map2-ou-walk2" id="toc-les-fonctions-à-2-input-de-type-map2-ou-walk2" class="nav-link" data-scroll-target="#les-fonctions-à-2-input-de-type-map2-ou-walk2">Les fonctions à 2 input (de type <code>map2</code> ou <code>walk2</code>)</a>
   <ul class="collapse">
-  <li><a href="#exemple-6-moyenne-pondérée" id="toc-exemple-6-moyenne-pondérée" class="nav-link" data-scroll-target="#exemple-6-moyenne-pondérée">Exemple 6 : moyenne pondérée</a></li>
-  <li><a href="#exemple-6bis-moyenne-pondérée-avec-dplyr-voir-le-détail-du-fonctionnement-dans-la-fiche-sur-les-recodages-multiples" id="toc-exemple-6bis-moyenne-pondérée-avec-dplyr-voir-le-détail-du-fonctionnement-dans-la-fiche-sur-les-recodages-multiples" class="nav-link" data-scroll-target="#exemple-6bis-moyenne-pondérée-avec-dplyr-voir-le-détail-du-fonctionnement-dans-la-fiche-sur-les-recodages-multiples">Exemple 6bis : moyenne pondérée avec <code>dplyr</code> (voir le détail du fonctionnement dans la fiche sur les recodages multiples)</a></li>
-  <li><a href="#exemple-7-coller-noms-dobjets-et-leurs-valeurs" id="toc-exemple-7-coller-noms-dobjets-et-leurs-valeurs" class="nav-link" data-scroll-target="#exemple-7-coller-noms-dobjets-et-leurs-valeurs">Exemple 7 : coller noms d’objets et leurs valeurs</a></li>
+  <li><a href="#exemple-7-moyenne-pondérée" id="toc-exemple-7-moyenne-pondérée" class="nav-link" data-scroll-target="#exemple-7-moyenne-pondérée">Exemple 7 : moyenne pondérée</a></li>
+  <li><a href="#exemple-7bis-moyenne-pondérée-avec-dplyr-voir-le-détail-du-fonctionnement-dans-la-fiche-sur-les-recodages-multiples" id="toc-exemple-7bis-moyenne-pondérée-avec-dplyr-voir-le-détail-du-fonctionnement-dans-la-fiche-sur-les-recodages-multiples" class="nav-link" data-scroll-target="#exemple-7bis-moyenne-pondérée-avec-dplyr-voir-le-détail-du-fonctionnement-dans-la-fiche-sur-les-recodages-multiples">Exemple 7bis : moyenne pondérée avec <code>dplyr</code> (voir le détail du fonctionnement dans la fiche sur les recodages multiples)</a></li>
+  <li><a href="#exemple-8-coller-noms-dobjets-et-leurs-valeurs" id="toc-exemple-8-coller-noms-dobjets-et-leurs-valeurs" class="nav-link" data-scroll-target="#exemple-8-coller-noms-dobjets-et-leurs-valeurs">Exemple 8 : coller noms d’objets et leurs valeurs</a></li>
   </ul></li>
   <li><a href="#exemples-dapplications-concrètes" id="toc-exemples-dapplications-concrètes" class="nav-link" data-scroll-target="#exemples-dapplications-concrètes">Exemples d’applications concrètes</a>
   <ul class="collapse">
   <li><a href="#récolter-des-données-web" id="toc-récolter-des-données-web" class="nav-link" data-scroll-target="#récolter-des-données-web">Récolter des données web</a></li>
-  <li><a href="#importer-des-jeux-de-données-analogues-en-une-fois" id="toc-importer-des-jeux-de-données-analogues-en-une-fois" class="nav-link" data-scroll-target="#importer-des-jeux-de-données-analogues-en-une-fois">Importer des jeux de données analogues en une fois</a></li>
+  <li><a href="#importer-des-jeux-de-données-analogues-en-une-fois" id="toc-importer-des-jeux-de-données-analogues-en-une-fois" class="nav-link" data-scroll-target="#importer-des-jeux-de-données-analogues-en-une-fois">Importer des jeux de données analogues en une fois</a>
+  <ul class="collapse">
+  <li><a href="#exemple-9-importation-de-fichiers-annuels" id="toc-exemple-9-importation-de-fichiers-annuels" class="nav-link" data-scroll-target="#exemple-9-importation-de-fichiers-annuels">Exemple 9 : importation de fichiers annuels</a></li>
+  </ul></li>
   <li><a href="#réaliser-un-même-traitement-sur-plusieurs-ensembles-de-données" id="toc-réaliser-un-même-traitement-sur-plusieurs-ensembles-de-données" class="nav-link" data-scroll-target="#réaliser-un-même-traitement-sur-plusieurs-ensembles-de-données">Réaliser un même traitement sur plusieurs ensembles de données</a>
   <ul class="collapse">
-  <li><a href="#exemple-9-statistiques-descriptives-sur-plusieurs-data.frames" id="toc-exemple-9-statistiques-descriptives-sur-plusieurs-data.frames" class="nav-link" data-scroll-target="#exemple-9-statistiques-descriptives-sur-plusieurs-data.frames">Exemple 9 : statistiques descriptives sur plusieurs data.frames</a></li>
+  <li><a href="#exemple-10-statistiques-descriptives-dun-ensemble-de-variables-par-année" id="toc-exemple-10-statistiques-descriptives-dun-ensemble-de-variables-par-année" class="nav-link" data-scroll-target="#exemple-10-statistiques-descriptives-dun-ensemble-de-variables-par-année">Exemple 10 : statistiques descriptives d’un ensemble de variables par année</a></li>
   </ul></li>
   </ul></li>
   </ul>
@@ -226,7 +229,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">November 12, 2025</p>
+      <p class="date">December 19, 2025</p>
     </div>
   </div>
   
@@ -246,6 +249,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <table class="caption-top table">
 <caption><strong>Fonctions utilisées dans la fiche</strong></caption>
+<colgroup>
+<col style="width: 16%">
+<col style="width: 83%">
+</colgroup>
 <thead>
 <tr class="header">
 <th>Packages</th>
@@ -255,19 +262,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tbody>
 <tr class="odd">
 <td><strong>Base R</strong></td>
-<td>list - for - mean - sum</td>
+<td>list - for - mean - sum - Sys.sleep - rpois - weighted.mean - get</td>
 </tr>
 <tr class="even">
 <td><strong>dplyr</strong></td>
-<td>across</td>
+<td>across - group_split - cur_column</td>
 </tr>
 <tr class="odd">
 <td><strong>purrr</strong></td>
-<td>map - imap - map2 - pmap - in_parallel</td>
+<td>map - imap - map2 - pmap - in_parallel - safely - list_transpose - list_rbind</td>
 </tr>
 <tr class="even">
 <td><strong>mirai</strong></td>
 <td>deamon</td>
+</tr>
+<tr class="odd">
+<td><strong>readr</strong></td>
+<td>write_csv - read_csv</td>
+</tr>
+<tr class="even">
+<td><strong>stringr</strong></td>
+<td>str_extract</td>
+</tr>
+<tr class="odd">
+<td><strong>qessmasteR</strong></td>
+<td>desc_quanti</td>
 </tr>
 </tbody>
 </table>
@@ -502,22 +521,13 @@ $d$error
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># l'argument otherwise de safely permet de définir une valeur de remplacement en cas d'erreur</span></span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>somme_carres_safe2 <span class="ot">&lt;-</span> <span class="fu">safely</span>(somme_carres, <span class="at">otherwise =</span> <span class="cn">NA</span>)</span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>somme_carres_err2 <span class="ot">&lt;-</span> <span class="fu">map</span>(vecteurs_na_err, somme_carres_safe2)</span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="co"># on peut réorganiser la liste pour ne garder que les resultats avec la fonction transpose</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="co"># on peut réorganiser la liste pour ne garder que les resultats avec la fonction list_transpose</span></span>
 <span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="co"># cela donne donc :</span></span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>resultats <span class="ot">&lt;-</span> <span class="fu">transpose</span>(somme_carres_err2)<span class="sc">$</span>result</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>resultats <span class="ot">&lt;-</span> <span class="fu">list_transpose</span>(somme_carres_err2)<span class="sc">$</span>result</span>
 <span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>resultats</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>$a
-[1] 385
-
-$b
-[1] 2485
-
-$c
-[1] 6585
-
-$d
-[1] NA</code></pre>
+<pre><code>   a    b    c    d 
+ 385 2485 6585   NA </code></pre>
 </div>
 </div>
 </section>
@@ -525,8 +535,8 @@ $d
 <section id="barres-de-progression" class="level2">
 <h2 class="anchored" data-anchor-id="barres-de-progression">Barres de progression</h2>
 <p>Les fonctions de <code>purrr</code> permettent d’ajouter une barre de progression très facilement en utilisant l’argument <code>.progress</code>. Cet argument prend la valeur <code>TRUE</code> ou le nom de l’opération concernée dans la boucle. Ce dernier cas est conseillé quand il y a plusieurs boucles imbriquées.</p>
-<section id="exemple-4-calcul-long-avec-barre-de-progression" class="level3">
-<h3 class="anchored" data-anchor-id="exemple-4-calcul-long-avec-barre-de-progression">Exemple 4 : calcul long avec barre de progression</h3>
+<section id="exemple-5-calcul-long-avec-barre-de-progression" class="level3">
+<h3 class="anchored" data-anchor-id="exemple-5-calcul-long-avec-barre-de-progression">Exemple 5 : calcul long avec barre de progression</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># on ajoute une pause de 2 secondes dans la fonction somme_carres pour simuler un calcul long</span></span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>somme_carres_pause <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
@@ -556,8 +566,8 @@ $c
 <section id="parallélisation-des-traitements-expérimental" class="level2">
 <h2 class="anchored" data-anchor-id="parallélisation-des-traitements-expérimental">Parallélisation des traitements (expérimental)</h2>
 <p>Le package <code>purrr</code> propose la fonction <code>in_parallel</code> qui permet d’exécuter différents objets en parallèle en utilisant plusieurs “workers”. Cela peut considérablement accélérer le traitement de grandes quantités de données.</p>
-<section id="exemple-5-parallélisation-avec-in_parallel" class="level3">
-<h3 class="anchored" data-anchor-id="exemple-5-parallélisation-avec-in_parallel">Exemple 5 : parallélisation avec <code>in_parallel</code></h3>
+<section id="exemple-6-parallélisation-avec-in_parallel" class="level3">
+<h3 class="anchored" data-anchor-id="exemple-6-parallélisation-avec-in_parallel">Exemple 6 : parallélisation avec <code>in_parallel</code></h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># # on planifie l'utilisation de 3 workers vu qu'il y a 3 objets dans la liste vecteurs_na</span></span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>mirai<span class="sc">::</span><span class="fu">daemons</span>(<span class="dv">3</span>)</span>
@@ -597,87 +607,75 @@ $c
 <section id="les-fonctions-à-2-input-de-type-map2-ou-walk2" class="level1">
 <h1>Les fonctions à 2 input (de type <code>map2</code> ou <code>walk2</code>)</h1>
 <p>Avec <code>map2</code> il faut deux listes ou vecteurs en input. Les deux doivent faire la même taille car les éléments des listes seront utilisés ensemble. La fonction appliquée doit logiquement prendre deux arguments.</p>
-<section id="exemple-6-moyenne-pondérée" class="level3">
-<h3 class="anchored" data-anchor-id="exemple-6-moyenne-pondérée">Exemple 6 : moyenne pondérée</h3>
+<section id="exemple-7-moyenne-pondérée" class="level3">
+<h3 class="anchored" data-anchor-id="exemple-7-moyenne-pondérée">Exemple 7 : moyenne pondérée</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># on crée deux listes de vecteurs</span></span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>valeurs <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">a =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="at">b =</span> <span class="dv">11</span><span class="sc">:</span><span class="dv">20</span>, <span class="at">c =</span> <span class="dv">21</span><span class="sc">:</span><span class="dv">30</span>)</span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>poids <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">a_pond =</span> <span class="fu">rpois</span>(<span class="dv">10</span>, <span class="dv">3</span>) <span class="sc">/</span> <span class="dv">3</span>, <span class="at">b_pond =</span> <span class="fu">rpois</span>(<span class="dv">10</span>, <span class="dv">3</span>) <span class="sc">/</span><span class="dv">3</span>, <span class="at">c_pond =</span> <span class="fu">rpois</span>(<span class="dv">10</span>, <span class="dv">3</span>) <span class="sc">/</span><span class="dv">3</span>)</span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="co"># on applique la fonction `weighted.mean` à chaque paire d'éléments des deux listes</span></span>
-<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>moyennes_ponderees <span class="ot">&lt;-</span> <span class="fu">map2</span>(valeurs, poids, weighted.mean)</span>
-<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>moyennes_ponderees</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>poids <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">a_pond =</span> <span class="fu">rpois</span>(<span class="dv">10</span>, <span class="dv">3</span>) <span class="sc">/</span> <span class="dv">3</span>, </span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">b_pond =</span> <span class="fu">rpois</span>(<span class="dv">10</span>, <span class="dv">3</span>) <span class="sc">/</span><span class="dv">3</span>, </span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">c_pond =</span> <span class="fu">rpois</span>(<span class="dv">10</span>, <span class="dv">3</span>) <span class="sc">/</span><span class="dv">3</span>)</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a><span class="co"># on applique la fonction `weighted.mean` à chaque paire d'éléments des deux listes</span></span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>moyennes_ponderees <span class="ot">&lt;-</span> <span class="fu">map2</span>(valeurs, poids, weighted.mean)</span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>moyennes_ponderees</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$a
-[1] 5.086957
+[1] 6.615385
 
 $b
-[1] 15.25926
+[1] 15.2
 
 $c
-[1] 25.35484</code></pre>
+[1] 25.41667</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># on peut également l'écrire ainsi :</span></span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>moyennes_ponderees <span class="ot">&lt;-</span> <span class="fu">map2</span>(valeurs, poids, <span class="sc">~</span><span class="fu">weighted.mean</span>(.x, .y))</span>
 <span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>moyennes_ponderees</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$a
-[1] 5.086957
+[1] 6.615385
 
 $b
-[1] 15.25926
+[1] 15.2
 
 $c
-[1] 25.35484</code></pre>
+[1] 25.41667</code></pre>
 </div>
 </div>
 <p>On peut remarquer que les noms d’objets de la première liste (<code>a</code>, <code>b</code>, <code>c</code>) ont été conservés. Dans le cas d’un data.frame, on pourrait utiliser une autre façon de faire des boucles avec <code>across</code>.</p>
 </section>
-<section id="exemple-6bis-moyenne-pondérée-avec-dplyr-voir-le-détail-du-fonctionnement-dans-la-fiche-sur-les-recodages-multiples" class="level3">
-<h3 class="anchored" data-anchor-id="exemple-6bis-moyenne-pondérée-avec-dplyr-voir-le-détail-du-fonctionnement-dans-la-fiche-sur-les-recodages-multiples">Exemple 6bis : moyenne pondérée avec <code>dplyr</code> (voir le détail du fonctionnement dans la fiche sur les recodages multiples)</h3>
+<section id="exemple-7bis-moyenne-pondérée-avec-dplyr-voir-le-détail-du-fonctionnement-dans-la-fiche-sur-les-recodages-multiples" class="level3">
+<h3 class="anchored" data-anchor-id="exemple-7bis-moyenne-pondérée-avec-dplyr-voir-le-détail-du-fonctionnement-dans-la-fiche-sur-les-recodages-multiples">Exemple 7bis : moyenne pondérée avec <code>dplyr</code> (voir le détail du fonctionnement dans la fiche sur les recodages multiples)</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># on crée un data.frame</span></span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(valeurs, poids)</span>
-<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr, <span class="at">quietly =</span> T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>
-Attachement du package : 'dplyr'</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Les objets suivants sont masqués depuis 'package:stats':
-
-    filter, lag</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Les objets suivants sont masqués depuis 'package:base':
-
-    intersect, setdiff, setequal, union</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span></span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">across</span>(</span>
-<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>      <span class="co"># on sélectionne les colonnes avec un seul caractère</span></span>
-<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">matches</span>(<span class="st">"^.$"</span>), </span>
-<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>      <span class="co"># on leur applique la fonction weighted.mean en utilisant les colonnes de poids </span></span>
-<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>      <span class="co"># (même nom collé avec _pond)</span></span>
-<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a>      <span class="sc">~</span><span class="fu">weighted.mean</span>(.x, <span class="fu">get</span>(<span class="fu">paste0</span>(<span class="fu">cur_column</span>(), <span class="st">"_pond"</span>)))</span>
-<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a>      )</span>
-<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr, <span class="at">quietly =</span> <span class="cn">TRUE</span>, <span class="at">warn.conflicts =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">across</span>(</span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>      <span class="co"># on sélectionne les colonnes avec un seul caractère</span></span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>      <span class="fu">matches</span>(<span class="st">"^.$"</span>), </span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>      <span class="co"># on leur applique la fonction weighted.mean en utilisant les colonnes de poids </span></span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a>      <span class="co"># (même nom collé avec _pond)</span></span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a>      <span class="sc">~</span><span class="fu">weighted.mean</span>(.x, <span class="fu">get</span>(<span class="fu">paste0</span>(<span class="fu">cur_column</span>(), <span class="st">"_pond"</span>)))</span>
+<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>         a        b        c
-1 5.086957 15.25926 25.35484</code></pre>
+<pre><code>         a    b        c
+1 6.615385 15.2 25.41667</code></pre>
 </div>
 </div>
 <p>On trouve bien les mêmes valeurs que dans l’exemple précédent. <code>map2</code> agit donc sur les deux listes en prenant un argument de part et d’autre à chaque fois.</p>
 <p>Un cas particulier de <code>map2</code> est <code>imap</code> qui permet de faire des boucles en utilisant à la fois les éléments d’une liste et leurs noms (ou indices si la liste n’a pas de noms). La fonction appliquée doit donc prendre deux arguments : l’élément de la liste et son nom (ou son indice).</p>
 </section>
-<section id="exemple-7-coller-noms-dobjets-et-leurs-valeurs" class="level3">
-<h3 class="anchored" data-anchor-id="exemple-7-coller-noms-dobjets-et-leurs-valeurs">Exemple 7 : coller noms d’objets et leurs valeurs</h3>
+<section id="exemple-8-coller-noms-dobjets-et-leurs-valeurs" class="level3">
+<h3 class="anchored" data-anchor-id="exemple-8-coller-noms-dobjets-et-leurs-valeurs">Exemple 8 : coller noms d’objets et leurs valeurs</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># on crée une liste de vecteurs</span></span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>vecteurs <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">a =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="at">b =</span> <span class="dv">6</span><span class="sc">:</span><span class="dv">10</span>, <span class="at">c =</span> <span class="dv">11</span><span class="sc">:</span><span class="dv">15</span>)</span>
-<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a><span class="co"># on utilise imap pour coller les noms (2e variable .y) et les valeurs (1ere variable .x)</span></span>
-<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>resultat <span class="ot">&lt;-</span> <span class="fu">imap</span>(vecteurs, <span class="sc">~</span><span class="fu">paste</span>(<span class="st">"La somme du vecteur"</span>, .y, <span class="st">"est de :"</span>, <span class="fu">paste</span>(.x, <span class="at">collapse =</span> <span class="st">", "</span>)))</span>
-<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>resultat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># on crée une liste de vecteurs</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>vecteurs <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">a =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="at">b =</span> <span class="dv">6</span><span class="sc">:</span><span class="dv">10</span>, <span class="at">c =</span> <span class="dv">11</span><span class="sc">:</span><span class="dv">15</span>)</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="co"># on utilise imap pour coller les noms (2e variable .y) et les valeurs (1ere variable .x)</span></span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>resultat <span class="ot">&lt;-</span> <span class="fu">imap</span>(vecteurs, <span class="sc">~</span><span class="fu">paste</span>(<span class="st">"La somme du vecteur"</span>, .y, <span class="st">"est de :"</span>, <span class="fu">paste</span>(.x, <span class="at">collapse =</span> <span class="st">", "</span>)))</span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>resultat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$a
 [1] "La somme du vecteur a est de : 1, 2, 3, 4, 5"
@@ -704,11 +702,13 @@ $c
 </section>
 <section id="importer-des-jeux-de-données-analogues-en-une-fois" class="level2">
 <h2 class="anchored" data-anchor-id="importer-des-jeux-de-données-analogues-en-une-fois">Importer des jeux de données analogues en une fois</h2>
-<p>Il est souvent nécessaire d’importer des jeux de données qui se ressemblent avec de nombreux fichiers (par exemple : les vagues d’une enquête, des données administratives annuelles, etc) ### Exemple 8 : importation de fichiers csv annuels</p>
+<p>Il est souvent nécessaire d’importer des jeux de données qui se ressemblent avec de nombreux fichiers (par exemple : les vagues d’une enquête, des données administratives annuelles, etc)</p>
+<section id="exemple-9-importation-de-fichiers-annuels" class="level3">
+<h3 class="anchored" data-anchor-id="exemple-9-importation-de-fichiers-annuels">Exemple 9 : importation de fichiers annuels</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># on utilise le jeu de données penguins qui regroupe des données par annees et </span></span>
-<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="co"># sont disponibles dans le dataset de base R</span></span>
-<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(penguins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># on utilise le jeu de données penguins qui regroupe des données par annees et </span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="co"># sont disponibles dans le dataset de base R</span></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(penguins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  species    island bill_len bill_dep flipper_len body_mass    sex year
 1  Adelie Torgersen     39.1     18.7         181      3750   male 2007
@@ -718,30 +718,30 @@ $c
 5  Adelie Torgersen     36.7     19.3         193      3450 female 2007
 6  Adelie Torgersen     39.3     20.6         190      3650   male 2007</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># on récupère les années disponibles</span></span>
-<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>years <span class="ot">&lt;-</span> <span class="fu">unique</span>(penguins<span class="sc">$</span>year)</span>
-<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a><span class="co"># on crée un dossier temporaire pour stocker les fichiers</span></span>
-<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>temp_dir <span class="ot">&lt;-</span> <span class="fu">tempdir</span>()</span>
-<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>file_paths <span class="ot">&lt;-</span> <span class="fu">file.path</span>(temp_dir, <span class="fu">paste0</span>(<span class="st">"penguins_"</span>, years, <span class="st">".csv"</span>))</span>
-<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a><span class="co"># on crée des fichiers csv pour chaque année avec walk2</span></span>
-<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a><span class="fu">walk2</span>(years, file_paths, </span>
-<span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a><span class="co"># on supprime l'année pour voir comment l'ajouter plus bas</span></span>
-<span id="cb49-9"><a href="#cb49-9" aria-hidden="true" tabindex="-1"></a>      <span class="sc">~</span>readr<span class="sc">::</span><span class="fu">write_csv</span>(<span class="fu">filter</span>(penguins, year <span class="sc">==</span> .x) <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>year), .y))</span>
-<span id="cb49-10"><a href="#cb49-10" aria-hidden="true" tabindex="-1"></a><span class="co"># on liste les fichiers créés</span></span>
-<span id="cb49-11"><a href="#cb49-11" aria-hidden="true" tabindex="-1"></a><span class="fu">list.files</span>(temp_dir, <span class="at">pattern =</span> <span class="st">"penguins_.*</span><span class="sc">\\</span><span class="st">.csv$"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># on récupère les années disponibles</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>years <span class="ot">&lt;-</span> <span class="fu">unique</span>(penguins<span class="sc">$</span>year)</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a><span class="co"># on crée un dossier temporaire pour stocker les fichiers</span></span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>temp_dir <span class="ot">&lt;-</span> <span class="fu">tempdir</span>()</span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>file_paths <span class="ot">&lt;-</span> <span class="fu">file.path</span>(temp_dir, <span class="fu">paste0</span>(<span class="st">"penguins_"</span>, years, <span class="st">".csv"</span>))</span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a><span class="co"># on crée des fichiers csv pour chaque année avec walk2</span></span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a><span class="fu">walk2</span>(years, file_paths, </span>
+<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a><span class="co"># on supprime l'année pour voir comment l'ajouter plus bas</span></span>
+<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a>      <span class="sc">~</span>readr<span class="sc">::</span><span class="fu">write_csv</span>(<span class="fu">filter</span>(penguins, year <span class="sc">==</span> .x) <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>year), .y))</span>
+<span id="cb45-10"><a href="#cb45-10" aria-hidden="true" tabindex="-1"></a><span class="co"># on liste les fichiers créés</span></span>
+<span id="cb45-11"><a href="#cb45-11" aria-hidden="true" tabindex="-1"></a><span class="fu">list.files</span>(temp_dir, <span class="at">pattern =</span> <span class="st">"penguins_.*</span><span class="sc">\\</span><span class="st">.csv$"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "penguins_2007.csv" "penguins_2008.csv" "penguins_2009.csv"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ils sont bien créés</span></span>
-<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a><span class="co"># l'année est contenue dans le nom du fichier, avant '.csv', on l'ajoute au nom du vecteur file_paths</span></span>
-<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a>file_paths <span class="ot">&lt;-</span> <span class="fu">set_names</span>(file_paths, stringr<span class="sc">::</span><span class="fu">str_extract</span>(file_paths, <span class="st">"</span><span class="sc">\\</span><span class="st">d+(?=</span><span class="sc">\\</span><span class="st">.csv$)"</span>))</span>
-<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a><span class="co"># on importe les fichiers avec imap en ajoutant l'année comme variable grâce au nom</span></span>
-<span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a>penguins_list <span class="ot">&lt;-</span> <span class="fu">imap</span>(file_paths, </span>
-<span id="cb51-7"><a href="#cb51-7" aria-hidden="true" tabindex="-1"></a>                      <span class="sc">~</span>readr<span class="sc">::</span><span class="fu">read_csv</span>(.x, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb51-8"><a href="#cb51-8" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">mutate</span>(<span class="at">year =</span> <span class="fu">as.integer</span>(.y)))</span>
-<span id="cb51-9"><a href="#cb51-9" aria-hidden="true" tabindex="-1"></a><span class="co"># on vérifie que les données ont bien été importées</span></span>
-<span id="cb51-10"><a href="#cb51-10" aria-hidden="true" tabindex="-1"></a>penguins_list</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ils sont bien créés</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a><span class="co"># l'année est contenue dans le nom du fichier, avant '.csv', on l'ajoute au nom du vecteur file_paths</span></span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>file_paths <span class="ot">&lt;-</span> <span class="fu">set_names</span>(file_paths, stringr<span class="sc">::</span><span class="fu">str_extract</span>(file_paths, <span class="st">"</span><span class="sc">\\</span><span class="st">d+(?=</span><span class="sc">\\</span><span class="st">.csv$)"</span>))</span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a><span class="co"># on importe les fichiers avec imap en ajoutant l'année comme variable grâce au nom</span></span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a>penguins_list <span class="ot">&lt;-</span> <span class="fu">imap</span>(file_paths, </span>
+<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a>                      <span class="sc">~</span>readr<span class="sc">::</span><span class="fu">read_csv</span>(.x, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">mutate</span>(<span class="at">year =</span> <span class="fu">as.integer</span>(.y)))</span>
+<span id="cb47-9"><a href="#cb47-9" aria-hidden="true" tabindex="-1"></a><span class="co"># on vérifie que les données ont bien été importées</span></span>
+<span id="cb47-10"><a href="#cb47-10" aria-hidden="true" tabindex="-1"></a>penguins_list</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$`2007`
 # A tibble: 110 × 8
@@ -791,8 +791,8 @@ $`2009`
 10 Adelie  Biscoe     43.2     19           197      4775 male    2009
 # ℹ 110 more rows</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co"># on peut refusionner les data.frames en un seul</span></span>
-<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="fu">list_rbind</span>(penguins_list)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># on peut refusionner les data.frames en un seul</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="fu">list_rbind</span>(penguins_list)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 344 × 8
    species island    bill_len bill_dep flipper_len body_mass sex     year
@@ -812,24 +812,25 @@ $`2009`
 </div>
 <p>Bien sûr, nous avons pris ici un cas simple mais dans le cas où les bases auraient des noms de variable différents ou des modalités différentes, on pourrait inclure une fonction qui permettrait d’adapter chaque base avant de fusionner. On peut également ne pas fusionner les bases de données et garder tout cela sous forme de liste dans laquelle on viendrait ensuite piocher pour faire des analyses.</p>
 </section>
+</section>
 <section id="réaliser-un-même-traitement-sur-plusieurs-ensembles-de-données" class="level2">
 <h2 class="anchored" data-anchor-id="réaliser-un-même-traitement-sur-plusieurs-ensembles-de-données">Réaliser un même traitement sur plusieurs ensembles de données</h2>
-<p>Cette fois, il s’agit de réaliser un même traitement sur plusieurs data.frames ou tibbles. Par exemple, on peut vouloir calculer des statistiques descriptives sur plusieurs jeux de données similaires. Dans le cas de données d’enquêtes par vague, cela peut permetttre de faire très vite la comparaison.</p>
-<section id="exemple-9-statistiques-descriptives-sur-plusieurs-data.frames" class="level3">
-<h3 class="anchored" data-anchor-id="exemple-9-statistiques-descriptives-sur-plusieurs-data.frames">Exemple 9 : statistiques descriptives sur plusieurs data.frames</h3>
+<p>Cette fois, il s’agit de réaliser un même traitement sur plusieurs data.frames ou tibbles. Par exemple, on peut vouloir calculer des statistiques descriptives sur plusieurs jeux de données similaires. Dans le cas de données d’enquêtes par vague, cela peut permettre de faire très vite la comparaison.</p>
+<section id="exemple-10-statistiques-descriptives-dun-ensemble-de-variables-par-année" class="level3">
+<h3 class="anchored" data-anchor-id="exemple-10-statistiques-descriptives-dun-ensemble-de-variables-par-année">Exemple 10 : statistiques descriptives d’un ensemble de variables par année</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="co"># on importe un package permettant de faire des statistiques descriptives facilement (que j'ai créé et déposé sur github)</span></span>
-<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"jrdavalos/qessmasteR"</span>, <span class="at">dependencies =</span> <span class="cn">TRUE</span>, <span class="at">quiet =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a><span class="co"># la fonction desc_quali permet de faire un tri à plat sur un ensemble de variables catégorielles et desc_quanti permet d'obtenir des statistiques descriptives concernant une variable continue</span></span>
-<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a><span class="co"># on reprend le jeu de données penguins sous forme de liste</span></span>
-<span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a>penguins_list <span class="sc">%&gt;%</span> </span>
-<span id="cb55-7"><a href="#cb55-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># on applique la fonction</span></span>
-<span id="cb55-8"><a href="#cb55-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(<span class="sc">~</span>qessmasteR<span class="sc">::</span><span class="fu">desc_quanti</span>(.x, <span class="sc">-</span>year)) <span class="sc">%&gt;%</span></span>
-<span id="cb55-9"><a href="#cb55-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># on rajoute l'année dans les résultats</span></span>
-<span id="cb55-10"><a href="#cb55-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">imap</span>(<span class="sc">~</span><span class="fu">mutate</span>(.x, <span class="at">year =</span> .y, <span class="at">.before =</span> Variable)) <span class="sc">%&gt;%</span></span>
-<span id="cb55-11"><a href="#cb55-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># on regroupe les data.frames en un seul</span></span>
-<span id="cb55-12"><a href="#cb55-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list_rbind</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co"># on importe un package permettant de faire des statistiques descriptives facilement (que j'ai créé et déposé sur github)</span></span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"jrdavalos/qessmasteR"</span>, <span class="at">dependencies =</span> <span class="cn">TRUE</span>, <span class="at">quiet =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a><span class="co"># la fonction desc_quali permet de faire un tri à plat sur un ensemble de variables catégorielles et desc_quanti permet d'obtenir des statistiques descriptives concernant une variable continue</span></span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a><span class="co"># on reprend le jeu de données penguins sous forme de liste</span></span>
+<span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a>penguins_list <span class="sc">%&gt;%</span> </span>
+<span id="cb51-7"><a href="#cb51-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># on applique la fonction</span></span>
+<span id="cb51-8"><a href="#cb51-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(<span class="sc">~</span>qessmasteR<span class="sc">::</span><span class="fu">desc_quanti</span>(.x, <span class="sc">-</span>year)) <span class="sc">%&gt;%</span></span>
+<span id="cb51-9"><a href="#cb51-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># on rajoute l'année dans les résultats</span></span>
+<span id="cb51-10"><a href="#cb51-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">imap</span>(<span class="sc">~</span><span class="fu">mutate</span>(.x, <span class="at">year =</span> .y, <span class="at">.before =</span> Variable)) <span class="sc">%&gt;%</span></span>
+<span id="cb51-11"><a href="#cb51-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># on regroupe les data.frames en un seul</span></span>
+<span id="cb51-12"><a href="#cb51-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list_rbind</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Variable(s) ignoree(s) car non-numerique(s) : species, island, sex
 Warning: Variable(s) ignoree(s) car non-numerique(s) : species, island, sex
@@ -853,21 +854,21 @@ Warning: Variable(s) ignoree(s) car non-numerique(s) : species, island, sex</cod
 12 2009  body_mass   119 2900   6000   4210.  4061.  4360.  823.   3500   4000  
 # ℹ 2 more variables: `75%` &lt;dbl&gt;, `Shapiro-Wilk` &lt;chr&gt;</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="co"># on a bien les statistiques descriptives pour chaque année et pour chaque variable</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co"># on a bien les statistiques descriptives pour chaque année et pour chaque variable</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>On peut évidemment faire d’autres types de traitements comme des modèles, de la data-visualisation, etc.</p>
 <p>Ici on a subdivisé la base de donnée par année en sauvegardant pour l’exemple, mais on peut également le faire sur une variable quelconque et au sein du traitement avec la fonction <code>group_split</code></p>
-<p>Exemple 9bis : même chose en partant du data.frame d’origine</p>
+<p>Exemple 10bis : même chose en partant du data.frame d’origine</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">%&gt;%</span></span>
-<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># on divise le data.frame par année</span></span>
-<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_split</span>(year) <span class="sc">%&gt;%</span></span>
-<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># on applique la fonction</span></span>
-<span id="cb59-5"><a href="#cb59-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(<span class="sc">~</span>qessmasteR<span class="sc">::</span><span class="fu">desc_quanti</span>(.x, <span class="sc">-</span>year)) <span class="sc">%&gt;%</span></span>
-<span id="cb59-6"><a href="#cb59-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># on rajoute l'année dans les résultats</span></span>
-<span id="cb59-7"><a href="#cb59-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">imap</span>(<span class="sc">~</span><span class="fu">mutate</span>(.x, <span class="at">year =</span> <span class="fu">unique</span>(penguins<span class="sc">$</span>year)[<span class="fu">as.integer</span>(.y)], <span class="at">.before =</span> Variable)) <span class="sc">%&gt;%</span></span>
-<span id="cb59-8"><a href="#cb59-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># on regroupe les data.frames en un seul</span></span>
-<span id="cb59-9"><a href="#cb59-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list_rbind</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">%&gt;%</span></span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># on divise le data.frame par année</span></span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_split</span>(year) <span class="sc">%&gt;%</span></span>
+<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># on applique la fonction</span></span>
+<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(<span class="sc">~</span>qessmasteR<span class="sc">::</span><span class="fu">desc_quanti</span>(.x, <span class="sc">-</span>year)) <span class="sc">%&gt;%</span></span>
+<span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># on rajoute l'année dans les résultats</span></span>
+<span id="cb55-7"><a href="#cb55-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">imap</span>(<span class="sc">~</span><span class="fu">mutate</span>(.x, <span class="at">year =</span> <span class="fu">unique</span>(penguins<span class="sc">$</span>year)[<span class="fu">as.integer</span>(.y)], <span class="at">.before =</span> Variable)) <span class="sc">%&gt;%</span></span>
+<span id="cb55-8"><a href="#cb55-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># on regroupe les data.frames en un seul</span></span>
+<span id="cb55-9"><a href="#cb55-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list_rbind</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Variable(s) ignoree(s) car non-numerique(s) : species, island, sex
 Warning: Variable(s) ignoree(s) car non-numerique(s) : species, island, sex
@@ -891,7 +892,7 @@ Warning: Variable(s) ignoree(s) car non-numerique(s) : species, island, sex</cod
 12  2009 body_mass   119 2900   6000   4210.  4061.  4360.  823.   3500   4000  
 # ℹ 2 more variables: `75%` &lt;dbl&gt;, `Shapiro-Wilk` &lt;chr&gt;</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="co"># on a bien la même chose que précédemment</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="co"># on a bien la même chose que précédemment</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 
