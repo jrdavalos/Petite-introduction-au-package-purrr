@@ -251,7 +251,7 @@ moyennes_ponderees
 
 On peut remarquer que les noms d'objets de la première liste (`a`, `b`, `c`) ont été conservés. Dans le cas d'un data.frame, on pourrait utiliser une autre façon de faire des boucles avec `across`.
 
-### Exemple 7bis : moyenne pondérée avec `dplyr` (voir le détail du fonctionnement dans la fiche sur les recodages multiples)
+### Exemple 7bis : moyenne pondérée avec `dplyr` (voir le détail [ici](R/assist/posts/recodage_multiple/recodage_multiple.qmd))
 
 ```{r}
 # on crée un data.frame
